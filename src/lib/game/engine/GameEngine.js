@@ -8,6 +8,7 @@ import { ProductionSystem } from "./ProductionSystem";
 import { floatingTexts } from "$lib/stores/floatingTexts.svelte";
 
 import { estruturas } from '$lib/data/estruturas.js';
+import { codeEditor } from "$lib/stores/codeEditor.svelte";
 
 class GameEngine{
   constructor(){
@@ -22,6 +23,7 @@ class GameEngine{
 
   click({ x, y }){
     const amount = this.clickSystem.click();
+
     floatingTexts.add({
       x: x + Math.random() * 20 - 10,
       y: y - 20,
@@ -54,9 +56,13 @@ class GameEngine{
     return true;
   }
 
-  addPontos(amount){
+  addPontos(amount){  
     this.state.pontos += amount;
     this.checkDesbloqueio();
+
+    if (amount > 0) {
+      codeEditor.addProgress(Math.min(amount, 30));
+    }
   }
 
   spendPontos(amount){
@@ -92,6 +98,7 @@ class GameEngine{
   tick(delta) {
     const totalGerado = this.productionSystem.calculateTickLps(delta);
     this.addPontos(totalGerado);
+    this.state.stats.linesGenerated += totalGerado;
     this.state.lpsTotal = totalGerado / delta;
   }
 

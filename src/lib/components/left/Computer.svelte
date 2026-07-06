@@ -2,6 +2,7 @@
   import { gameEngine } from "$lib/game/engine/GameEngine";
   import { gameState } from "$lib/game/state/gameState.svelte.js";
   import { randomBetween } from "$lib/utils/numbers";
+  import CodeEditor from "./CodeEditor.svelte";
 
   let keyboardHitboxElement;
   
@@ -43,9 +44,7 @@
   <div class="hacker"></div>
   <div class="demon"></div>
   <div class="computer computer-back"></div>
-  <div class="computer computer-codelines">
-      <div class="computer-codelines--wrapper"></div>
-  </div>
+  <CodeEditor/>
   <div class="light-glow--container">
       <div class="light-glow"></div>
   </div>
