@@ -41,6 +41,17 @@
     max-width: 270px;
     width: 63%;
     height: 41.2%;
+
+    @media (max-width: 900px) {
+      height: 39%;
+      top: 10%;
+    }
+
+    @media (max-width: 800px) {
+      width: 60%;
+      height: 41.2%;
+      top: 10.7%;
+    }
   }
 
   .computer-codelines--wrapper {

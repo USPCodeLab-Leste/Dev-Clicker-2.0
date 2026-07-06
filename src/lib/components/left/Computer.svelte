@@ -1,6 +1,7 @@
 <script>
   import { gameEngine } from "$lib/game/engine/GameEngine";
   import { gameState } from "$lib/game/state/gameState.svelte.js";
+  import { coffeeManager } from "$lib/stores/coffeeManager.svelte";
   import { randomBetween } from "$lib/utils/numbers";
   import CodeEditor from "./CodeEditor.svelte";
 
@@ -17,8 +18,13 @@
     animarPulinho()
 
     // DEBUG
-    if (event.key === 'p') {
-      gameEngine.addPontos(10000000000);
+    switch (event.key) {
+      case 'p':
+        gameEngine.addPontos(10000000000);
+        break;
+      case 'c':
+        coffeeManager.spawn();
+        break;
     }
   }
 
@@ -157,11 +163,6 @@
     filter: brightness(1.2);
   }
 
-  .light-glow--container.disabled {
-    display: none;
-    visibility: hidden;
-  }
-
   .light-glow--container {
     display: flex;
     align-items: center;
@@ -174,7 +175,22 @@
     height: 41.2%;
     pointer-events: none;
     z-index: 5;
-    /* transform: translate(-50%, -50%); */
+
+    @media (max-width: 900px) {
+      height: 39%;
+      top: 10%;
+    }
+    
+    @media (max-width: 800px) {
+      width: 60%;
+      height: 41.2%;
+      top: 10.7%;
+    }
+  }
+
+  .light-glow--container.disabled {
+    display: none;
+    visibility: hidden;
   }
 
   .light-glow {
@@ -202,7 +218,6 @@
     }
   }
 
-    /* Área de fato clicável do teclado */
   .computer-hitbox {
     position: absolute;
     left: 10%;

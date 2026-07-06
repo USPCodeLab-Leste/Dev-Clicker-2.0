@@ -58,3 +58,10 @@ export function formatarNumero(valor, de = false) {
 
   return Number(valor).toLocaleString('pt-BR');
 }
+
+export function randomCoord(margin) {
+  const x = Math.random() * (100 - 2 * margin) + margin;
+  const y = Math.random() * (100 - 2 * margin) + margin;
+  
+  return { x, y };
+}

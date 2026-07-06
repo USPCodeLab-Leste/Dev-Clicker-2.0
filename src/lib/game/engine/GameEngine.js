@@ -4,11 +4,15 @@ import { EconomySystem } from "./EconomySystem";
 import { EstruturaSystem } from './EstruturaSystem';
 import { UpgradesSystem } from './UpgradesSystem';
 import { ProductionSystem } from "./ProductionSystem";
-
-import { floatingTexts } from "$lib/stores/floatingTexts.svelte";
+import { CoffeeSystem } from "./CoffeeSystem";
 
 import { estruturas } from '$lib/data/estruturas.js';
+import { formatarNumero } from "$lib/utils/numbers";
+
+import { floatingTexts } from "$lib/stores/floatingTexts.svelte";
+import { bonusAlertManager } from "$lib/stores/bonusAlertManager.svelte";
 import { codeEditor } from "$lib/stores/codeEditor.svelte";
+import { boostSystem } from "$lib/stores/boostSystem.svelte";
 
 class GameEngine{
   constructor(){
@@ -19,6 +23,7 @@ class GameEngine{
     this.estruturaSystem = new EstruturaSystem(this.state);
     this.upgradesSystem = new UpgradesSystem(this.state);
     this.productionSystem = new ProductionSystem(this.state);
+    this.coffeeSystem = new CoffeeSystem(this.state);
   }
 
   click({ x, y }){
@@ -96,14 +101,71 @@ class GameEngine{
   }
 
   tick(delta) {
+    this.coffeeSystem.tick(delta);
+    boostSystem.update(delta);
+
     const totalGerado = this.productionSystem.calculateTickLps(delta);
     this.addPontos(totalGerado);
     this.state.stats.linesGenerated += totalGerado;
     this.state.lpsTotal = totalGerado / delta;
   }
 
+  calcLpsTotal() {
+    return this.state.lpsTotal;
+  }
+
   calcEstruturaLps(estrutura) {
     return this.estruturaSystem.calcEstruturaLps(estrutura);
+  }
+
+  calcEstruturaTotalLps(estrutura) {
+    return this.state.estruturas[estrutura.id]?.quantidade * this.calcEstruturaLps(estrutura) || 0;
+  }
+
+  calcEstruturaPercentageLps(estrutura) {
+    const totalLps = this.calcEstruturaTotalLps(estrutura);
+    return totalLps > 0 ? ((totalLps / this.calcLpsTotal()) * 100).toFixed(2) : 0;
+  }
+
+  triggerCoffeeEvent(coffee) {
+    const { coffee: chosenCoffee, position } = this.coffeeSystem.chooseCoffeeEvent(coffee);
+
+    const effect = chosenCoffee.effect;
+    let message = 'teste'
+
+    switch (effect.type) {
+      case 'gain_percent_points':
+        const bonusPoints = Math.floor(this.state.pontos * effect.percent) + effect.bonus;
+        this.addPontos(bonusPoints);
+        message = `Ganhou ${formatarNumero(bonusPoints)} linhas!`;
+        break;
+
+      case 'coffee_storm':
+        this.coffeeSystem.startCoffeeStorm(effect.duration, effect.interval);
+        message = `Café para todo lado!`;
+        break;
+
+      case 'gain_lps':
+        const lpsBonus = this.calcLpsTotal() * 60 * effect.minutes;
+        this.addPontos(lpsBonus);
+        message = `Ganhou ${formatarNumero(lpsBonus)} linhas! (${effect.minutes} min das LpS)`;
+        break;
+
+      case `buff`:
+        boostSystem.add(chosenCoffee)
+        switch (effect.stat) {
+          case 'lpsMultiplier':
+            message = `LpS x${effect.value} por ${effect.duration} segundos!`;
+            break;
+        }
+        break;
+
+      case 'nothing':
+        message = `Literalmente nada... Absolutamente nada...`;
+        break;
+    }
+
+    bonusAlertManager.spawn(chosenCoffee, { x: coffee.x, y: coffee.y }, message);
   }
 
 }

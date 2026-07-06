@@ -3,7 +3,6 @@ export const gameState = $state({
   pontos: 0,
   currentClickValue: 1,
   lpsTotal: 0,
-  lpsHighest: 0,
 
   lpsMultiplier: 1,
   bulkMultiplier: 1,
@@ -11,9 +10,18 @@ export const gameState = $state({
   estruturaMultiplier: 1,
 
   hasCombo: false,
-  coffeeProb: .03,
+  coffeeProb: 0.03,
   boostsActive: [],
 
+  coffees: {
+    bn1: { unlocked: true },
+    bn2: { unlocked: true },
+    bn3: { unlocked: true },
+    bn4: { unlocked: true },
+    bn5: { unlocked: true },
+    bn6: { unlocked: true },
+    bn7: { unlocked: true },
+  },
   estruturas: {},
   upgrades: {},
 
@@ -22,5 +30,6 @@ export const gameState = $state({
     handmadeLines: 0,
     totalCoffees: 0,
     linesGenerated: 0,
+    totalCoffees: 0,
   },
 })

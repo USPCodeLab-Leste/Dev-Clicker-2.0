@@ -1,4 +1,7 @@
 <script>
+  import BonusAlertLayer from '$lib/components/coffee/BonusAlertLayer.svelte';
+  import BoostLayer from '$lib/components/coffee/BoostLayer.svelte';
+  import CoffeeLayer from '$lib/components/coffee/CoffeeLayer.svelte';
   import FloattingTexts from '$lib/components/FloattingTexts.svelte';
   import ContainerLeft from '$lib/components/left/ContainerLeft.svelte';
   import ContainerRight from '$lib/components/right/ContainerRight.svelte';
@@ -27,6 +30,9 @@
 </script>
 
 <main>
+  <BoostLayer />
+  <BonusAlertLayer />
+  <CoffeeLayer />
   <FloattingTexts />
   <Tooltip/>
   <ContainerLeft />

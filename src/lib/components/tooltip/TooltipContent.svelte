@@ -14,40 +14,60 @@
 
   const itemType = $derived(item.id.slice(0, 2));
   const playerItem = $derived.by(() => {
-    if (itemType === 'es') {
-      return gameState.estruturas[item.id];
-    } else if (itemType === 'up') {
-      return gameState.upgrades[item.id];
+    switch (itemType) {
+      case 'es':
+        return gameState.estruturas[item.id];
+      case 'up':
+        return gameState.upgrades[item.id];
+      case 'bn':
+        return gameState.coffees[item.id];
     }
   });
 
   $effect(() => {
     if (anchor) {
       const rect = anchor.getBoundingClientRect();
-      tooltipElement.style.top = `${tooltip.mouse.y}px`;
-      tooltipElement.style.left = `${rect.left + window.scrollX - 30}px`;
-      tooltipElement.style.transform = 'translateX(-100%) translateY(-50%)';
+      
+      switch (itemType) {
+        case 'bn':
+          tooltipElement.style.top = `${rect.top + window.scrollY - 10}px`;
+          tooltipElement.style.left = `${tooltip.mouse.x}px`;
+          tooltipElement.style.transform = 'translateX(-50%) translateY(-100%)';
+          break;
+        default:
+          tooltipElement.style.top = `${tooltip.mouse.y}px`;
+          tooltipElement.style.left = `${rect.left + window.scrollX - 30}px`;
+          tooltipElement.style.transform = 'translateX(-100%) translateY(-50%)';
+          break;
+      }
     }
   });
-
 
 </script>
 
 <div 
   class="tooltip" 
   bind:this={tooltipElement}
+  class:bonus={itemType === 'bn'}
   // transition:fade={{ duration: 150 }}
 >
-  <div class="tooltip-header">
+  <div 
+    class="tooltip-header"
+    class:center={itemType === 'bn'}
+  >
     <div class="tooltip-header--left">
-      <img 
-        class="tooltip-icon"
-        src={`/icons/${item.icon}`}
-        alt={item.nome}
-      />
+      {#if itemType !== 'bn'}
+        <img 
+          class="tooltip-icon"
+          src={`/icons/${item.icon}`}
+          alt={item.nome}
+        />
+      {/if}
       <strong class="tooltip-name">{item.nome}</strong>
     </div>
-    <span class="tooltip-price coin">{formatarNumero(item.custo || item.custoBase, true)}</span>
+    {#if itemType !== 'bn'}
+      <span class="tooltip-price coin">{formatarNumero(item.custo || item.custoBase, true)}</span>
+    {/if}
   </div>
   <div class="tooltip-content">
     {#if item.funcao}
@@ -63,7 +83,7 @@
     <div class="tooltip-extra">
       <ul>
         <li>cada {item.nome} gera {formatarNumero((gameEngine.calcEstruturaLps(item)).toFixed(1), true)} LpS</li>
-        <li>{playerItem.quantidade} {playerItem.quantidade > 1 ? item.plural : item.nome} {playerItem.quantidade > 1 ? 'estão' : 'está'} gerando {formatarNumero((playerItem?.quantidade*item.lps*gameState.lpsMultiplier).toFixed(1), true)} LpS ({(((playerItem?.quantidade*item.lps*gameState.lpsMultiplier).toFixed(1)/(gameState.lpsTotal))*100).toFixed(2)}%)</li>
+        <li>{playerItem.quantidade} {playerItem.quantidade > 1 ? item.plural : item.nome} {playerItem.quantidade > 1 ? 'estão' : 'está'} gerando {formatarNumero((gameEngine.calcEstruturaTotalLps(item)).toFixed(1), true)} LpS ({gameEngine.calcEstruturaPercentageLps(item)}%)</li>
         <li>{formatarNumero(Math.floor(playerItem.gerado), true)} linhas geradas até agora</li>
       </ul>
     </div>
@@ -106,14 +126,11 @@
     text-shadow: var(--ts);
   }
 
-  .tooltip-header.center {
-    display: block;
-  }
-
   .tooltip-header--left {
     display: flex;
     flex-direction: row;
     align-items: center;
+    flex: 1;
     gap: 5px;
   }
 
@@ -124,6 +141,7 @@
   }
 
   .tooltip-name {
+    width: 100%;
     text-align: left;
     font-weight: bold;
     font-size: 1.2em;
@@ -146,11 +164,6 @@
 
   .tooltip-content:has(+ .tooltip-extra:not(.hidden)) {
     border-bottom: 1px solid var(--c1);
-  }
-
-  .tooltip-extra.hidden {
-    display: none;
-    visibility: hidden;
   }
 
   .tooltip-description {

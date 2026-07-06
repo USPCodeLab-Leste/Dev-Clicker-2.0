@@ -109,13 +109,25 @@ body.matrix .content-item, body.evil .content-item {
 /* Textos para a estrutura */
 .mobile-purchased { color: white; font-weight: normal; }
 .item-purchased { font-size: 1.8em; color: var(--c2); font-weight: normal; }
-.item-name, .mobile-name { font-size: 1.2em; text-align: left; }
+.item-name, .mobile-name { 
+  font-size: 1.2em; 
+  text-align: left; 
+
+  @media (max-width: 800px) {
+    font-size: clamp(.9em, 6vw,1.2em);
+  }
+}
 .high { color: var(--high);}
 .low { color: var(--low);}
 
 .mobile-name, .mobile-purchased {
   display: none;
   visibility: hidden;
+
+  @media (max-width: 800px) {
+    display: block;
+    visibility: visible;
+  }
 }
 
 .info-bttn {
