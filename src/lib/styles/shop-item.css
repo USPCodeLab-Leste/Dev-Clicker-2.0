@@ -1,0 +1,131 @@
+.cust {
+  text-align: left;
+  font-weight: normal;
+}
+
+.coin::before {
+  content: "<\002F>"; /* </> */
+  aspect-ratio: 1/1;
+  width: 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  bottom: 3px;
+  margin-right: 5px;
+  font-family: monospace;
+  text-align: center;
+  /* letter-spacing: -2px; */
+  background-color: var(--c6);
+  border-radius: 5px;
+  font-size: .6rem;
+  text-shadow: none;
+  color: var(--c1);
+}
+
+.cust-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .2em;
+}
+
+.container-right:has( [data-bulk^="10"].active):not(:has(.upgrade)) .cust-wrapper::before {
+  color: rgb(255, 255, 255);
+  font-size: .8em;
+  font-weight: normal;
+}
+
+.container-right:has( [data-bulk="10"].active):not(:has(.upgrade)) .cust-wrapper::before { content: 'x10'; }
+.container-right:has( [data-bulk="100"].active):not(:has(.upgrade))  .cust-wrapper::before { content: 'x100'; }
+
+
+/* Cada um dos items da lista */
+.content-item {
+  --time: .8s;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: .4em;
+  padding: .5em;
+  border-radius: 5px;
+  border: var(--c1b);
+  background-color: var(--c3);
+  font-weight: bold;
+  cursor: pointer;
+  opacity: .5;
+  transition: opacity .1s linear;
+}
+
+/* Deixa a opacidade normal ao ser desbloqueado (e puder ser comprado) */
+.content-item.unlocked:not(:has(.high)) { opacity: 1; }
+
+/* Deixa levemente transparente enquanto está no modo matrix */
+body.matrix .content-item, body.evil .content-item { 
+  background-color: color-mix(in srgb, var(--c3) 80%, transparent); 
+}
+
+.item-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  aspect-ratio: 1/1;
+  width: 50px;
+  transition: opacity var(--time) linear, filter 1s linear;
+  filter: drop-shadow(5px 5px 2px var(--bs));
+}
+
+/* Deixa o icone preto enquanto ele nao for desbloqueado */
+.content-item.hidden .item-icon, .tooltip-icon.hidden {
+  filter: brightness(0);
+  opacity: .7;
+}
+
+.item-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.item-content {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 5px;
+  align-items: center;
+  text-shadow: var(--ts);
+}
+
+.item-text--wrapper {
+  display: flex; 
+  flex-direction: row; 
+  align-items: center;
+  gap: 5px;
+}
+
+/* Textos para a estrutura */
+.mobile-purchased { color: white; font-weight: normal; }
+.item-purchased { font-size: 1.8em; color: var(--c2); font-weight: normal; }
+.item-name, .mobile-name { font-size: 1.2em; text-align: left; }
+.high { color: var(--high);}
+.low { color: var(--low);}
+
+.mobile-name, .mobile-purchased {
+  display: none;
+  visibility: hidden;
+}
+
+.info-bttn {
+  display: none;
+  visibility: hidden;
+
+  align-self: stretch;
+  /* background-color: var(--c2); */
+  font-size: 1em;
+  padding: 0 .5em;
+  border: var(--c1b);
+  border-radius: 5px;
+}
