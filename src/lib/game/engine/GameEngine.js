@@ -1,6 +1,6 @@
 import { gameState } from "$lib/game/state/gameState.svelte.js";
 import { ClickSystem } from './ClickSystem';
-import { EconomySystem } from './EconomySystem';
+import { EconomySystem } from "./EconomySystem";
 import { EstruturaSystem } from './EstruturaSystem';
 import { UpgradesSystem } from './UpgradesSystem';
 import { ProductionSystem } from "./ProductionSystem";
@@ -26,6 +26,8 @@ class GameEngine{
       x: x + Math.random() * 20 - 10,
       y: y - 20,
       value: amount,
+      hasCombo: this.state.hasCombo,
+      combo: this.state.comboMultiplier
     })
     this.addPontos(amount);
   }

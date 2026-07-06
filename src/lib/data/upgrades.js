@@ -245,7 +245,9 @@ export const upgrades = [
     descricao: 'Receba instantaneamente o follow de uma garota que usa foto de dinossauro, luta boxe, desenha extremamente bem, ama patos e é terrivelmente boa em tudo (e se apaixone perdidamente por ela).',
     funcao: 'Clicar consecutivamente aumenta o multiplicador de cliques',
     icon: 'carta.webp',
-    efeito: () => hasCombo = true,
+    effect: {
+      type: 'combo',
+    }
   },
   {
     nome: "Extensão Caça-Cupom",
