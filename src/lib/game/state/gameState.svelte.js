@@ -21,6 +21,8 @@ export const gameState = $state({
     bn5: { unlocked: true },
     bn6: { unlocked: true },
     bn7: { unlocked: true },
+    bn8: { unlocked: true },
+    bn9: { unlocked: true },
   },
   estruturas: {},
   upgrades: {},

@@ -1,4 +1,5 @@
 import { gameState } from "$lib/game/state/gameState.svelte";
+import { matrixManager } from "./matrixManager.svelte";
 
 export class BoostSystem {
   active = $state([]);
@@ -34,6 +35,13 @@ export class BoostSystem {
       if (this.getProgress(boost) >= 1) {
         this.undoEffect(boost.boost);
         this.remove(boost.id);
+        
+        const lastBuff = this.active.at(-1);
+        if (lastBuff) {
+          matrixManager.start(lastBuff.boost.type);
+        } else {
+          matrixManager.clear()
+        }
       }
     }
   }
@@ -41,7 +49,6 @@ export class BoostSystem {
   applyEffect(boost) {
     switch (boost.effect.stat) {
       case 'lpsMultiplier':
-        console.log(gameState.lpsMultiplier, boost.effect.value)
         gameState.lpsMultiplier *= boost.effect.value;
         break;
     }

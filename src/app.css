@@ -101,23 +101,6 @@ main {
   gap: 2em;
 }
 
-/* MATRIX */
-
-.matrix-canvas {
-    height: 100vh;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: -100;
-    opacity: 1;
-    pointer-events: none;
-    transition: opacity .5s ease;
-}
-
-@starting-style {
-    .matrix-canvas { opacity: 0; }
-}
-
 /* MODAL */
 
 .modal, .items-modal {

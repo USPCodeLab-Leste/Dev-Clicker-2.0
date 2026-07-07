@@ -29,7 +29,7 @@ export const coffees = [
     nome: "Café Perfeito",
     descricao: "Temperatura ideal, sabor equilibrado e um aroma leve e perfumado. Perfeito!",
     type: 'matrix',
-    peso: 4000,
+    peso: 4,
     icon: 'cafe_perfeito.webp',
     effect: {
       type: 'buff',

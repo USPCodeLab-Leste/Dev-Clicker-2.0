@@ -13,6 +13,7 @@ import { floatingTexts } from "$lib/stores/floatingTexts.svelte";
 import { bonusAlertManager } from "$lib/stores/bonusAlertManager.svelte";
 import { codeEditor } from "$lib/stores/codeEditor.svelte";
 import { boostSystem } from "$lib/stores/boostSystem.svelte";
+import { matrixManager } from "$lib/stores/matrixManager.svelte";
 
 class GameEngine{
   constructor(){
@@ -103,6 +104,7 @@ class GameEngine{
   tick(delta) {
     this.coffeeSystem.tick(delta);
     boostSystem.update(delta);
+    matrixManager.update(delta);
 
     const totalGerado = this.productionSystem.calculateTickLps(delta);
     this.addPontos(totalGerado);
@@ -153,6 +155,8 @@ class GameEngine{
 
       case `buff`:
         boostSystem.add(chosenCoffee)
+        matrixManager.start(chosenCoffee.type);
+
         switch (effect.stat) {
           case 'lpsMultiplier':
             message = `LpS x${effect.value} por ${effect.duration} segundos!`;

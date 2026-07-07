@@ -4,6 +4,7 @@
   import CoffeeLayer from '$lib/components/coffee/CoffeeLayer.svelte';
   import FloattingTexts from '$lib/components/FloattingTexts.svelte';
   import ContainerLeft from '$lib/components/left/ContainerLeft.svelte';
+  import MatrixCanvas from '$lib/components/MatrixCanvas.svelte';
   import ContainerRight from '$lib/components/right/ContainerRight.svelte';
   import Tooltip from '$lib/components/tooltip/Tooltip.svelte';
 
@@ -30,6 +31,7 @@
 </script>
 
 <main>
+  <MatrixCanvas />
   <BoostLayer />
   <BonusAlertLayer />
   <CoffeeLayer />
