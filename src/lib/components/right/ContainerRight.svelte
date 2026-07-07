@@ -1,13 +1,18 @@
 <script>
+  import { scrollShadow } from '$lib/actions/scrollShadow';
   import { gameEngine } from '$lib/game/engine/GameEngine';
   import { gameState } from '$lib/game/state/gameState.svelte';
+  import { notificationManager } from '$lib/stores/notificationManager.svelte';
+
   import StructuresList from './structures/StructuresList.svelte';
   import UpgradesList from './upgrades/UpgradesList.svelte';
+  
   let activeTab = $state('Estruturas');
 
   function changeTab(tab) {
     if (activeTab === tab) return;
     
+    notificationManager.clear();
     activeTab = tab;
   }
 </script>
@@ -17,17 +22,23 @@
     <button 
       class="button-header estruturas left"
       class:active={activeTab === 'Estruturas'}
+      class:has-notification={notificationManager.hasEstruturas}
       onclick={() => changeTab('Estruturas')}
     >
-      <div class="notification"></div>
+      <div 
+        class="notification"
+      ></div>
       <span class="text">Estruturas</span>
     </button>
     <button 
       class="button-header upgrades right"
       class:active={activeTab === 'Upgrades'}
+      class:has-notification={notificationManager.hasUpgrades}
       onclick={() => changeTab('Upgrades')}
     >
-      <div class="notification"></div>
+      <div 
+        class="notification"
+      ></div>
       <span class="text">Upgrades</span>
     </button>
   </div>
@@ -57,7 +68,10 @@
       >x100</button>
     </div>
   </div>
-  <div class="container-content scroll-shadow">
+  <div 
+    class="container-content scroll-shadow"
+    use:scrollShadow
+  >
     <ul class="content-list">
       {#if activeTab === 'Estruturas'}
         <StructuresList />
@@ -103,6 +117,10 @@
     margin: -1em;
     display: flex;
     flex-direction: row;
+
+    @media (max-width: 800px) {
+      margin: -1em -.4em;
+    }
   }
 
   .items-bulk {
@@ -206,12 +224,7 @@
 
   .button-header.left.active { border-right: 3px solid black;} /* Se o botão da esquerda que tá ativo, cria uma bordinha na direita */
   .button-header.right.active { border-left: 3px solid black;} /* Se o botão da direita que tá ativo, cria uma bordinha na esquerda */
-
-  .notification {
-    opacity: 0;
-    transition: opacity .2s linear;
-  }
-
+  
   .button-header.has-notification:not(.active) .notification {
     opacity: 1;
     animation: bounce 1s;
@@ -222,7 +235,7 @@
     40% {transform: translateY(-15px);}
     60% {transform: translateY(-8px);}
   }
-
+  
   .notification {
     aspect-ratio: 1/1;
     width: .8em;
@@ -231,6 +244,13 @@
     right: 5px;
     top: 5px;
     position: absolute;
+    opacity: 0;
+    transition: opacity .2s linear;
+  
+    @media (max-width: 800px) {
+      right: .8em;
+      width: 1.2em;
+    }
   }
 
   .notification::after {
@@ -242,6 +262,10 @@
     color: white;
     font-size: .7em;
     content: '!';
+
+    @media (max-width: 800px) {
+      font-size: 1.1em;
+    }
   }
 
 </style>

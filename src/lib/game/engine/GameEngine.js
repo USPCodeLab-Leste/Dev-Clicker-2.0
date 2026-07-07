@@ -6,6 +6,7 @@ import { UpgradesSystem } from './UpgradesSystem';
 import { ProductionSystem } from "./ProductionSystem";
 import { CoffeeSystem } from "./CoffeeSystem";
 
+import { upgrades } from "$lib/data/upgrades";
 import { estruturas } from '$lib/data/estruturas.js';
 import { formatarNumero } from "$lib/utils/numbers";
 
@@ -14,7 +15,7 @@ import { bonusAlertManager } from "$lib/stores/bonusAlertManager.svelte";
 import { codeEditor } from "$lib/stores/codeEditor.svelte";
 import { boostSystem } from "$lib/stores/boostSystem.svelte";
 import { matrixManager } from "$lib/stores/matrixManager.svelte";
-import { upgrades } from "$lib/data/upgrades";
+import { notificationManager } from "$lib/stores/notificationManager.svelte";
 
 class GameEngine{
   constructor(){
@@ -44,23 +45,20 @@ class GameEngine{
   buyEstrutura(estrutura){
     const { custo, quantidade } = this.estruturaSystem.getEstruturaCostAndQuantity(estrutura);
 
-    if (quantidade <= 0)
-      return false
+    if (!this.estruturaSystem.buyEstrutura(estrutura, quantidade))
+      return false;
 
-    this.estruturaSystem.buyEstrutura(estrutura, quantidade);
     this.spendPontos(custo);
     this.state.stats.structuresBuilt.value += quantidade;
     return true;
   }
 
   buyUpgrade(upgrade){
-    if (this.state.pontos < upgrade.custo)
+    if (!this.upgradesSystem.buyUpgrade(upgrade))
       return false;
 
-    this.upgradesSystem.buyUpgrade(upgrade);
     this.upgradesSystem.applyUpgradeEffect(upgrade);
     this.spendPontos(upgrade.custo);
-
     return true;
   }
 
@@ -100,6 +98,18 @@ class GameEngine{
           unlocked: true,
           lps: estrutura.lps
         };
+        notificationManager.addEstrutura();
+      }
+    }
+
+    for (const upgrade of upgrades) {
+      const playerUpgrade = this.state.upgrades[upgrade.id];
+      if (!playerUpgrade?.unlocked && this.state.pontos >= upgrade.custo) {
+        this.state.upgrades[upgrade.id] = { 
+          purchased: false,
+          unlocked: true
+        };
+        notificationManager.addUpgrade();
       }
     }
   }

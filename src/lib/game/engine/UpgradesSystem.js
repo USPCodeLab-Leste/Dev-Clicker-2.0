@@ -4,7 +4,12 @@ export class UpgradesSystem {
   }
 
   buyUpgrade(upgrade) {
-    this.state.upgrades[upgrade.id] = { unlocked: true };
+    if (this.state.pontos < upgrade.custo || !this.state.upgrades[upgrade.id]?.unlocked || this.state.upgrades[upgrade.id]?.purchased) {
+      return false;
+    }
+
+    this.state.upgrades[upgrade.id].purchased = true;
+    return true
   }
 
   applyUpgradeEffect(upgrade) {

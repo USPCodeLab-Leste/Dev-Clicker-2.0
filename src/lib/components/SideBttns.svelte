@@ -28,6 +28,10 @@
     display: flex;
     flex-direction: column;
     gap: .5em;
+
+    @media (max-width: 800px) {
+      --icon-size: 42px;   
+    }
   }
 
   .stats-btn {

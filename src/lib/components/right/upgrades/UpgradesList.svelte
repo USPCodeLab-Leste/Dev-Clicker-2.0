@@ -6,7 +6,7 @@
 
   let visibleUpgrades = $derived(
     upgrades.filter((upgrade) => {
-      return !gameState.upgrades[upgrade.id]?.unlocked;
+      return !gameState.upgrades[upgrade.id]?.purchased;
     })
   );
 

@@ -6,6 +6,7 @@
   import { fade } from "svelte/transition";
   import StatModalItem from "./StatModalItem.svelte";
   import { formatarNumero } from "$lib/utils/numbers";
+  import { scrollShadow } from "$lib/actions/scrollShadow";
 
   function onKeyUp(event) {
     switch (event.key) {
@@ -51,7 +52,10 @@
             <span>{Object.keys(gameState.upgrades).length}/{upgrades.length} ({gameEngine.calcUpgradesPercentage()}%)</span>
         </header>
       </div>
-      <div class="stats-upgrades--container scroll-shadow">
+      <div 
+        class="stats-upgrades--container scroll-shadow"
+        use:scrollShadow
+      >
         {#each upgrades as upgrade}
           <StatModalItem
             upgrade={upgrade}

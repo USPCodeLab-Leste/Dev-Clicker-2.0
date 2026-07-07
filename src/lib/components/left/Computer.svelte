@@ -86,6 +86,10 @@
     position: relative;
     width: 100%;
     max-height: 400px;
+
+    @media (max-width: 800px) {
+      height: 85vw;
+    }
   }
 
   /* Muda a cor do computador apra um tom de verde */

@@ -39,11 +39,15 @@ export class EstruturaSystem {
   }
 
   buyEstrutura(estrutura, quantidade) {
+    if (quantidade <= 0 || !this.state.estruturas[estrutura.id]?.unlocked)
+      return false;
+
     if (this.state.estruturas[estrutura.id]) {
       this.state.estruturas[estrutura.id].quantidade += quantidade;
     } else {
       this.state.estruturas[estrutura.id] = { quantidade, gerado: 0, unlocked: true, lps: estrutura.lps };
     }
+    return true;
   }
 
   calcEstruturaLps(estrutura) {

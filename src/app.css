@@ -270,38 +270,6 @@ main {
         flex-direction: column;
         width: 100%;
     }
-    
-    .side-bttns {
-        --icon-size: 42px;    
-    }
-
-    .container-right--header {
-        margin: -1em -.4em;
-    }
-
-    .notification {
-        right: .8em;
-        width: 1.2em;
-    }
-
-    .notification::after {
-        font-size: 1.1em;
-    }
-
-    .container-left--computer {
-        max-height: 400px;
-        height: 85vw;
-    }
-
-    .container-left {
-        width: 95%;
-    }
-
-    .computer-codelines, .light-glow--container {
-        width: 60%;
-        height: 41.2%;
-        top: 10.7%;
-    }
 
     .item-purchased { 
         display: none;

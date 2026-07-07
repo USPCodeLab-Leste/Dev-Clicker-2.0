@@ -20,6 +20,7 @@
     gap: 2em;
 
     @media (max-width: 800px) {
+      width: 95%;
       margin-top: 7rem;
     }
   }
