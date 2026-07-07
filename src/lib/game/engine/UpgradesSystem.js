@@ -25,10 +25,36 @@ export class UpgradesSystem {
 
       case 'coffeeProb':
         this.state.coffeeProb *= effect.value;
+        
+        if (!this.state.evilCoffeesUnlocked) {
+          this.state.evilCoffeesUnlocked = true;
+          this.state.coffees = {
+            ...this.state.coffees,
+            bn7: { unlocked: true },
+            bn8: { unlocked: true },
+            bn9: { unlocked: true },
+          }
+        }
         break;
 
       case 'combo':
         this.state.hasCombo = true;
+        break;
+
+      case 'buildDiscount':
+        this.state.buildDiscount *= effect.value;
+        break;
+
+      case 'clickLpsPercent':
+        this.state.clickLpsPercent += effect.value;
+        break;
+
+      case 'clickStructureBonus':
+        this.state.clickStructureBonus += effect.value;
+        break;
+
+      case 'clickCoffeeChance':
+        this.state.clickCoffeeChance += effect.chance;
         break;
     }
   }

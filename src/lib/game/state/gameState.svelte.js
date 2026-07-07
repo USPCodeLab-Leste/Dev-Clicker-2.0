@@ -4,14 +4,20 @@ export const gameState = $state({
   currentClickValue: 1,
   lpsTotal: 0,
 
+  buildDiscount: 1,
   lpsMultiplier: 1,
   bulkMultiplier: 1,
   comboMultiplier: 1,
   estruturaMultiplier: 1,
 
+  clickLpsPercent: 0,
+  clickStructureBonus: 0,
+  clickCoffeeChance: 0,
+
   hasCombo: false,
   coffeeProb: 0.03,
   boostsActive: [],
+  evilCoffeesUnlocked: false,
 
   coffees: {
     bn1: { unlocked: true },
@@ -20,9 +26,6 @@ export const gameState = $state({
     bn4: { unlocked: true },
     bn5: { unlocked: true },
     bn6: { unlocked: true },
-    bn7: { unlocked: true },
-    bn8: { unlocked: true },
-    bn9: { unlocked: true },
   },
   estruturas: {},
   upgrades: {},

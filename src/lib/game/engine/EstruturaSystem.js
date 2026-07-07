@@ -7,7 +7,7 @@ export class EstruturaSystem {
 
   custoAtual(estrutura) {
     let estruturaQuantidade = this.state.estruturas[estrutura.id]?.quantidade || 0;
-    return Math.floor(estrutura.custoBase * Math.pow(1.15, estruturaQuantidade));
+    return Math.floor(this.state.buildDiscount * estrutura.custoBase * Math.pow(1.15, estruturaQuantidade));
   }
 
   custoTotal(estrutura, quantidade) {

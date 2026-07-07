@@ -193,7 +193,10 @@ export const upgrades = [
     descricao: 'Impede teu irmão caçula de perturbar teu foco sagrado.',
     funcao: '+1% das suas LpS por clique.',
     icon: 'placa.webp',
-    efeito: () => onClickEffects.push(() => lpsTOT * 0.01),
+    effect: {
+      type: 'clickLpsPercent',
+      value: 0.01
+    },
   },
   {
     nome: "Ventilador portátil",
@@ -201,7 +204,10 @@ export const upgrades = [
     descricao: 'Para esfriar tua cabeça (e evitar um burnout).',
     funcao: '+1% das suas LpS por clique.',
     icon: 'ventilador.webp',
-    efeito: () => onClickEffects.push(() => lpsTOT * 0.01),
+    effect: {
+      type: 'clickLpsPercent',
+      value: 0.01
+    },
   },
   {
     nome: "Gatinho fofo",
@@ -209,7 +215,10 @@ export const upgrades = [
     descricao: 'Meoow',
     funcao: '+1% das suas LpS por clique.',
     icon: 'gatinho.webp',
-    efeito: () => onClickEffects.push(() => lpsTOT * 0.01),
+    effect: {
+      type: 'clickLpsPercent',
+      value: 0.01
+    },
   },
   {
     nome: "Bot de Commit",
@@ -217,15 +226,21 @@ export const upgrades = [
     descricao: 'feat: lê e commita com base nos teus pensamentos.',
     funcao: 'Cada clique gera +0.5 linha de código para cada construção possuída',
     icon: 'commitbot.webp',
-    efeito: () => onClickEffects.push(() => estruturas.reduce((sum, obj) => sum + obj.comprados, 0) * 0.5 * estruturaMultiplier),
+    effect: {
+      type: 'clickStructureBonus',
+      value: 0.5
+    }
   },
   {
     nome: "ChatGPT Licenciado",
     custo: 100000000,
     descricao: 'Agora com 5% menos alucinações.',
-    funcao: 'Multiplica o ganho do Bot de Commit por 10',
+    funcao: 'Cada clique gera +0.5 linha de código para cada construção possuída',
     icon: 'chatgpt.webp',
-    efeito: () => estruturaMultiplier *= 10,
+    effect: {
+      type: 'clickStructureBonus',
+      value: 0.5
+    }
   },
   {
     nome: "Cubo mágico",
@@ -233,11 +248,10 @@ export const upgrades = [
     descricao: 'Você sabia que existem mais combinações possíveis em um cubo mágico do que átomos no universo? Pois é, na verdade é mentira...',
     funcao: 'Cada clique passa a ter uma chance mínima de fazer surgir um café',
     icon: 'cubo.webp',
-    efeito: () => onClickEffects.push(() => {
-      const chance = 0.01
-      if (Math.random() < chance) spawnCoffee()
-      return 0
-    }),
+    effect: {
+      type: 'clickCoffeeChance',
+      chance: 0.001
+    },
   },
   {
     nome: "Stalker cibernética",
@@ -255,8 +269,9 @@ export const upgrades = [
     descricao: 'Mergulha nos cantos mais obscuros da internet em busca dos melhores cupons de desconto.',
     funcao: 'Reduz o preço de todas as estruturas em 10%',
     icon: 'preco.webp',
-    efeito: () => {
-      estruturas.forEach(e => e.custoBase *= 0.9)
-    },
+    effect: {
+      type: 'buildDiscount',
+      value: 0.9,
+    }
   },
 ].map((up, i) => ({...up, id: `up${i+1}`, unlocked: false, purchased: false})).sort((a, b) => a.custo - b.custo)
