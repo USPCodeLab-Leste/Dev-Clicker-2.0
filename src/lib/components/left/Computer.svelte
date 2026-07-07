@@ -56,7 +56,7 @@
   </div>
   <div 
     class="tap"
-    class:disabled={gameState.stats.totalClicks > 0}
+    class:disabled={gameState.stats.totalClicks.value > 0}
   ></div>
   <div class="computer computer-monitor"></div>
   <button

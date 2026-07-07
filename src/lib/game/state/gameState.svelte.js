@@ -28,10 +28,41 @@ export const gameState = $state({
   upgrades: {},
 
   stats: {
-    totalClicks: 0,
-    handmadeLines: 0,
-    totalCoffees: 0,
-    linesGenerated: 0,
-    totalCoffees: 0,
+    totalClicks: {
+      label: 'Toques no teclado',
+      value: 0,
+      format: true,
+    },
+    handmadeLines: {
+      label: 'Linhas geradas na mão',
+      value: 0,
+      format: true,
+    },
+    linesGenerated: {
+      label: 'Linhas produzidas',
+      value: 0,
+      format: true,
+    },
+    linesTotal: {
+      label: 'Linhas totais',
+      value: 0,
+      format: true,
+    },
+    lpsMultiplier: {
+      label: 'Multiplicador LpS',
+      value: 1,
+      prefix: 'x',
+      decimals: 2,
+    },
+    totalCoffees: {
+      label: 'Cafés tomados',
+      value: 0,
+      format: true,
+    },
+    structuresBuilt: {
+      label: 'Estruturas compradas',
+      value: 0,
+      format: true,
+    },
   },
 })

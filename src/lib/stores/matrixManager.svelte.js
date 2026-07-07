@@ -64,7 +64,7 @@ class MatrixManager {
   }
 
   update(delta) {
-    this.opacity = this.lerp(this.opacity, this.targetOpacity, delta * 6);
+    this.opacity = this.lerp(this.opacity, this.targetOpacity, delta * 15);
     this.canvas.style.opacity = this.opacity;
 
     if (this.opacity < 0.00001 && this.targetOpacity === 0) {

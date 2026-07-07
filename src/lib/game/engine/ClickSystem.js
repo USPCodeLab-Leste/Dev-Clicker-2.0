@@ -19,8 +19,8 @@ export class ClickSystem {
       }, 1000);
     }
 
-    this.state.stats.totalClicks++;
-    this.state.stats.handmadeLines += amount;
+    this.state.stats.totalClicks.value++;
+    this.state.stats.handmadeLines.value += amount;
 
     return amount;
   }

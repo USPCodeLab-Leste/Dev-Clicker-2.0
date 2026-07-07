@@ -6,7 +6,9 @@
   import ContainerLeft from '$lib/components/left/ContainerLeft.svelte';
   import MatrixCanvas from '$lib/components/MatrixCanvas.svelte';
   import InfoModal from '$lib/components/modal/InfoModal.svelte';
+  import StatsModal from '$lib/components/modal/StatsModal.svelte';
   import ContainerRight from '$lib/components/right/ContainerRight.svelte';
+  import SideBttns from '$lib/components/SideBttns.svelte';
   import Tooltip from '$lib/components/tooltip/Tooltip.svelte';
 
   import { gameEngine } from '$lib/game/engine/GameEngine.js';
@@ -32,6 +34,8 @@
 </script>
 
 <main>
+  <StatsModal />
+  <SideBttns />
   <InfoModal />
   <MatrixCanvas />
   <BoostLayer />

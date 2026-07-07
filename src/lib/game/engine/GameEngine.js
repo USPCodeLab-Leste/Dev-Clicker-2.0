@@ -14,6 +14,7 @@ import { bonusAlertManager } from "$lib/stores/bonusAlertManager.svelte";
 import { codeEditor } from "$lib/stores/codeEditor.svelte";
 import { boostSystem } from "$lib/stores/boostSystem.svelte";
 import { matrixManager } from "$lib/stores/matrixManager.svelte";
+import { upgrades } from "$lib/data/upgrades";
 
 class GameEngine{
   constructor(){
@@ -48,6 +49,7 @@ class GameEngine{
 
     this.estruturaSystem.buyEstrutura(estrutura, quantidade);
     this.spendPontos(custo);
+    this.state.stats.structuresBuilt.value += quantidade;
     return true;
   }
 
@@ -64,6 +66,7 @@ class GameEngine{
 
   addPontos(amount){  
     this.state.pontos += amount;
+    this.state.stats.linesTotal.value += amount;
     this.checkDesbloqueio();
 
     if (amount > 0) {
@@ -108,7 +111,8 @@ class GameEngine{
 
     const totalGerado = this.productionSystem.calculateTickLps(delta);
     this.addPontos(totalGerado);
-    this.state.stats.linesGenerated += totalGerado;
+    this.state.stats.linesGenerated.value += totalGerado;
+    this.state.stats.lpsMultiplier.value = this.state.lpsMultiplier;
     this.state.lpsTotal = totalGerado / delta;
   }
 
@@ -127,6 +131,12 @@ class GameEngine{
   calcEstruturaPercentageLps(estrutura) {
     const totalLps = this.calcEstruturaTotalLps(estrutura);
     return totalLps > 0 ? ((totalLps / this.calcLpsTotal()) * 100).toFixed(2) : 0;
+  }
+
+  calcUpgradesPercentage() {
+    const totalUpgrades = Object.keys(this.state.upgrades).length;
+    const totalAvailableUpgrades = upgrades.length;
+    return ((totalUpgrades / totalAvailableUpgrades) * 100).toFixed(2);
   }
 
   triggerCoffeeEvent(coffee) {
@@ -169,6 +179,7 @@ class GameEngine{
         break;
     }
 
+    this.state.stats.totalCoffees.value++;
     bonusAlertManager.spawn(chosenCoffee, { x: coffee.x, y: coffee.y }, message);
   }
 

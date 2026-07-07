@@ -23,14 +23,31 @@
     }
   });
 
+  function onKeyUp(event) {
+    switch (event.key) {
+      case 'Escape':
+        hideInfoModal()
+        break;
+    }
+  }
 
 </script>
+
+<svelte:window onkeyup={onKeyUp} />
 
 {#if infoModal.visible}
   <div 
     class="info-modal"
     class:enabled={infoModal.visible}
     transition:fade={{ duration: 150 }}
+    onclick={(e) => {
+      if (e.target === e.currentTarget) {
+        hideInfoModal()
+      }
+    }}
+    onkeyup={onKeyUp}
+    role="dialog"
+    tabindex="0"
   >
     <div class="info-modal--content">
         <div class="info-modal--title">{titles[itemType]}</div>
