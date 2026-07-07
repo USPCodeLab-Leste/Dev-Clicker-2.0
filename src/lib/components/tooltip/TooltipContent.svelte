@@ -1,5 +1,4 @@
 <script>
-  import { fade } from 'svelte/transition';
   import { tooltip } from '$lib/stores/tooltip.svelte.js';
   import { gameState } from '$lib/game/state/gameState.svelte';
   import { formatarNumero } from '$lib/utils/numbers';
@@ -49,7 +48,6 @@
   class="tooltip" 
   bind:this={tooltipElement}
   class:bonus={itemType === 'bn'}
-  // transition:fade={{ duration: 150 }}
 >
   <div 
     class="tooltip-header"
@@ -172,6 +170,11 @@
     opacity: .6;
     max-width: 350px;
     align-self: flex-end;
+
+    @media (max-width: 800px) {
+      font-size: .8em;
+      max-width: 280px;
+    }
   }
 
   .tooltip-description {
@@ -186,13 +189,13 @@
     margin-bottom: .4em;
   }
 
-  .tooltip ul, .mobile-tooltip ul {
+  .tooltip ul {
     display: flex;
     flex-direction: column;
     gap: 5px;
   }
 
-  .tooltip li, .mobile-tooltip li {
+  .tooltip li {
     text-align: left;
     font-size: .9em;
     background-color: var(--c2);
@@ -200,7 +203,7 @@
     border-radius: 10px;
   }
 
-  .tooltip li::before, .mobile-tooltip li::before {
+  .tooltip li::before {
     content: "• ";
   }
 </style>

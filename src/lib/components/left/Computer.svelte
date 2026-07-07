@@ -64,6 +64,7 @@
     class="computer-hitbox" id="click_button"
     aria-label="Teclado"
     onclick={(e) => gameEngine.click({ x: e.clientX, y: e.clientY })}
+    ontouchstart={animarPulinho}
   ></button>
   <div 
     id="computer-keyboard" 

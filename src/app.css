@@ -1,12 +1,9 @@
-/* importa a fonte */
 @import url('https://fonts.googleapis.com/css2?family=Jersey+15&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Doto:wght@100..900&family=Jersey+15&display=swap');
 
-/* Reseta o estilo das listas */
 ul, ol { list-style: none; }
 img { max-width: 100%; -webkit-user-drag: none; }
 
-/* Todos os botões resetam */
 button, input {
   appearance: none;
   border: none;
@@ -61,7 +58,6 @@ body.evil {
   --c6: #2f0000;
 }
 
-/* O estilo do body, onde dentro do body tem o container */
 body {
   --c1: #6ACBD4;
   --c1l: #94f3fc;
@@ -90,7 +86,6 @@ body {
   user-select: none;
 }
 
-/* O elemento principal */
 main {
   margin: 0 auto;
   max-width: 1000px;
@@ -254,7 +249,6 @@ main {
 .item-upgrades--container {
     position: relative;
     width: 100%;
-    /* margin-top: 1em; */
     row-gap: .5em; 
     display: flex;
     flex-wrap: wrap;
@@ -278,8 +272,6 @@ main {
 }
 
 .stats-upgrades {
-    /* flex: 80px 1 0; */
-    /* max-height: 120px; */
     display: flex;
     flex-direction: column;
     gap: .2em;
@@ -340,102 +332,6 @@ main {
     gap: .5em;
 }
 
-/* TOOLTIP */
-
-.mobile-tooltip {
-    touch-action: none;
-    pointer-events: none;
-    display: none;
-    visibility: hidden;
-    opacity: 0;
-
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 200000;
-    background-color: var(--bs);
-    transition: opacity .2s linear;
-}
-
-.mobile-tooltip.enabled {
-    pointer-events: auto;
-    display: block;
-    visibility: visible;
-}
-
-.mobile-tooltip--content {
-    display: flex;
-    flex-direction: column;
-    gap: .5em;
-    position: relative;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    max-width: 450px;
-    width: 90dvw;
-    max-height: 500px;
-    height: 80dvh;
-    padding: 0.4em;
-    z-index: 10001;
-
-    border-radius: 5px;
-    border: var(--c1b);
-    background-color: var(--c3);
-}
-
-.mobile-tooltip--title {
-    font-size: 1.3em;
-    width: 100%;
-    padding: .2em;
-    border-bottom: 1px solid var(--c1);
-}
-
-.mobile-tooltip--header {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: .5em;
-    padding: .2em;
-    border-radius: 5px;
-    border: var(--c1b);
-    width: 100%;
-}
-
-.mobile-tooltip--wrapper {
-    display: flex;
-    flex-direction: column;
-    gap: .5em;
-    flex: 1;
-}
-
-.mobile-tooltip--icon {
-    aspect-ratio: 1/1;
-    width: 80px;
-    filter :drop-shadow(5px 5px 2px var(--bs));
-}
-
-.mobile-tooltip--header-text {
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    text-shadow: var(--ts);
-}
-
-.mobile-tooltip--name {
-    font-size: 1.5em;
-}
-
-.close-bttn {
-    width: 100%;
-    background-color: var(--c5);
-    font-size: 1.4em;
-    padding: .5em;
-    border-radius: 5px;
-}
-
-/**/
 /* SCROLL SHADOW */
 
 .scroll-shadow {
@@ -568,33 +464,4 @@ main {
         display: none;
         visibility: hidden;
     }
-
-    .tooltip-description {
-        font-size: .8em;
-        max-width: 280px;
-    }
-}
-
-@media (max-width: 470px) {
-    .loading-txt {
-        font-size: clamp(1.8em, 20vw, 3em);
-    }
-}
-
-/* Botão para parar */
-.buttonStop, .resume{
-    z-index: 200;
-    border: var(--c1b);
-    position: fixed;
-    left: 0;
-    top: 0;
-    margin: 10px;
-    padding: 5px;
-    background-color: var(--c4);
-    font-size: 1em;
-}
-
-.resume {
-    top: auto;
-    bottom: 0;
 }

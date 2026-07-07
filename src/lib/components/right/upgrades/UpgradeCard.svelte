@@ -3,6 +3,7 @@
   import { gameEngine } from '$lib/game/engine/GameEngine';
   import { formatarNumero, sumPG } from '$lib/utils/numbers.js';
   import { hideTooltip, showTooltip, tooltip } from '$lib/stores/tooltip.svelte.js';
+  import { showInfoModal } from '$lib/stores/infoModal.svelte';
 
   let {
     upgrade,
@@ -19,13 +20,21 @@
   const custo = $derived(upgrade.custo);
 </script>
 
-<button
+<div
   class="content-item upgrade"
   class:unlocked={gameState.pontos >= custo}
   data-tooltipId={upgrade.id}
   onmousemove={mouseEnter}
   onmouseleave={mouseLeave}
   onclick={() => gameEngine.buyUpgrade(upgrade)}
+  onkeypress={(e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      gameEngine.buyUpgrade(upgrade);
+    }
+  }}
+  tabindex="0"
+  role="button"
+  aria-label={`Comprar ${upgrade.nome} por ${formatarNumero(custo)} pontos`}
 >
 
   <img
@@ -54,17 +63,17 @@
 
     </div>
 
-    <!-- <button
+    <button
         class="info-bttn"
         onclick={(e) => {
-            e.stopPropagation();
-            showMobileTooltip('es', estrutura);
+          e.stopPropagation();
+          showInfoModal(upgrade);
         }}
     >
         INFO
-    </button> -->
+    </button>
   </div>
-</button>
+</div>
 
 <style>
   @import '$lib/styles/shop-item.css';

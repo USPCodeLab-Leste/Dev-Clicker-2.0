@@ -1,5 +1,6 @@
 <script>
   import { boostSystem } from "$lib/stores/boostSystem.svelte";
+  import { showInfoModal } from "$lib/stores/infoModal.svelte";
   import { showTooltip, hideTooltip } from "$lib/stores/tooltip.svelte";
 
   let { boost } = $props();
@@ -20,6 +21,7 @@
   style={`--progress: ${boostSystem.getProgress(boost) * 360}deg;`}
   onmousemove={mouseEnter}
   onmouseleave={mouseLeave}
+  ontouchstart={() => showInfoModal({...boost.boost, funcao: boost.message})}
   role="alert"
 >
   <img 

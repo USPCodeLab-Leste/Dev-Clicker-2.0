@@ -5,6 +5,7 @@
   import FloattingTexts from '$lib/components/FloattingTexts.svelte';
   import ContainerLeft from '$lib/components/left/ContainerLeft.svelte';
   import MatrixCanvas from '$lib/components/MatrixCanvas.svelte';
+  import InfoModal from '$lib/components/modal/InfoModal.svelte';
   import ContainerRight from '$lib/components/right/ContainerRight.svelte';
   import Tooltip from '$lib/components/tooltip/Tooltip.svelte';
 
@@ -31,6 +32,7 @@
 </script>
 
 <main>
+  <InfoModal />
   <MatrixCanvas />
   <BoostLayer />
   <BonusAlertLayer />

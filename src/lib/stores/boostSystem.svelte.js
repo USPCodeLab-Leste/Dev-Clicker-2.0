@@ -5,7 +5,7 @@ export class BoostSystem {
   active = $state([]);
   now = $state(Date.now());
 
-  add(boost) {
+  add(boost, message) {
     const activeBoost = this.active.find(b => b.boost.id === boost.id)
     if (activeBoost) {
       activeBoost.startedAt = Date.now();
@@ -16,6 +16,7 @@ export class BoostSystem {
     this.active.push({
       id: crypto.randomUUID(),
       boost,
+      message,
       duration: boost.effect.duration,
       startedAt: Date.now()
     })

@@ -3,6 +3,8 @@
   import { gameEngine } from '$lib/game/engine/GameEngine';
   import { formatarNumero, sumPG } from '$lib/utils/numbers.js';
   import { hideTooltip, showTooltip, tooltip } from '$lib/stores/tooltip.svelte.js';
+  import { infoModal, showInfoModal } from '$lib/stores/infoModal.svelte';
+  import InfoModal from '$lib/components/modal/InfoModal.svelte';
 
   let {
     estrutura,
@@ -21,7 +23,7 @@
   const custo = $derived(gameEngine.custoTotal(estrutura, gameState.bulkMultiplier));
 </script>
 
-<button
+<div
   class="content-item estrutura"
   class:hidden={!playerEstrutura?.unlocked}
   class:unlocked={playerEstrutura?.unlocked}
@@ -29,6 +31,14 @@
   onmousemove={mouseEnter}
   onmouseleave={mouseLeave}
   onclick={() => gameEngine.buyEstrutura(estrutura)}
+  onkeypress={(e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      gameEngine.buyEstrutura(estrutura);
+    }
+  }}
+  tabindex="0"
+  role="button"
+  aria-label={`Comprar ${estrutura.nome} por ${formatarNumero(custo)} pontos`}
 >
 
   <img
@@ -76,17 +86,17 @@
       {playerEstrutura?.quantidade > 0 ? playerEstrutura.quantidade : ''}
     </span>
 
-    <!-- <button
+    <button
         class="info-bttn"
         onclick={(e) => {
-            e.stopPropagation();
-            showMobileTooltip('es', estrutura);
+          e.stopPropagation();
+          showInfoModal(estrutura);
         }}
     >
         INFO
-    </button> -->
+    </button>
   </div>
-</button>
+</div>
 
 <style>
   @import '$lib/styles/shop-item.css';

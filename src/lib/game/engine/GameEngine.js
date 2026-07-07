@@ -154,14 +154,14 @@ class GameEngine{
         break;
 
       case `buff`:
-        boostSystem.add(chosenCoffee)
-        matrixManager.start(chosenCoffee.type);
-
         switch (effect.stat) {
           case 'lpsMultiplier':
-            message = `LpS x${effect.value} por ${effect.duration} segundos!`;
+            message = `LpS x${effect.value} por ${effect.duration} segundos${chosenCoffee.type == 'evil' ? '...' : '!!!'}`;
             break;
         }
+
+        boostSystem.add(chosenCoffee, message);
+        matrixManager.start(chosenCoffee.type);
         break;
 
       case 'nothing':
