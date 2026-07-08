@@ -1,4 +1,5 @@
 import { visualThemes } from '$lib/utils/visuals.js';
+import { audioManager } from './audioManager.svelte';
 
 class MatrixManager {
   opacity = 0;
@@ -61,6 +62,7 @@ class MatrixManager {
   clear() {
     this.targetOpacity = 0;
     document.body.classList.remove('matrix', 'evil');
+    audioManager.stopMusic();
   }
 
   update(delta) {

@@ -13,9 +13,10 @@ import { formatarNumero } from "$lib/utils/numbers";
 import { floatingTexts } from "$lib/stores/floatingTexts.svelte";
 import { bonusAlertManager } from "$lib/stores/bonusAlertManager.svelte";
 import { codeEditor } from "$lib/stores/codeEditor.svelte";
-import { boostSystem } from "$lib/stores/boostSystem.svelte";
+import { boostManager } from "$lib/stores/boostManager.svelte";
 import { matrixManager } from "$lib/stores/matrixManager.svelte";
 import { notificationManager } from "$lib/stores/notificationManager.svelte";
+import { audioManager } from "$lib/stores/audioManager.svelte";
 
 class GameEngine{
   constructor(){
@@ -40,6 +41,7 @@ class GameEngine{
       combo: this.state.comboMultiplier
     })
     this.addPontos(amount);
+    audioManager.playRandom(['click1', 'click2', 'click3'], .4);
   }
 
   buyEstrutura(estrutura){
@@ -50,6 +52,7 @@ class GameEngine{
 
     this.spendPontos(custo);
     this.state.stats.structuresBuilt.value += quantidade;
+    audioManager.playRandom(['buy1', 'buy2'], .4);
     return true;
   }
 
@@ -59,6 +62,7 @@ class GameEngine{
 
     this.upgradesSystem.applyUpgradeEffect(upgrade);
     this.spendPontos(upgrade.custo);
+    audioManager.playRandom(['buy1', 'buy2'], .4);
     return true;
   }
 
@@ -89,6 +93,8 @@ class GameEngine{
   }
 
   checkDesbloqueio() {
+    let unlockedSomething = false;
+
     for (const estrutura of estruturas) {
       const playerEstrutura = this.state.estruturas[estrutura.id];
       if (!playerEstrutura?.unlocked && this.state.pontos >= estrutura.custoBase) {
@@ -98,19 +104,28 @@ class GameEngine{
           unlocked: true,
           lps: estrutura.lps
         };
+
         notificationManager.addEstrutura();
+        unlockedSomething = true;
       }
     }
 
     for (const upgrade of upgrades) {
       const playerUpgrade = this.state.upgrades[upgrade.id];
+      
       if (!playerUpgrade?.unlocked && this.state.pontos >= upgrade.custo) {
         this.state.upgrades[upgrade.id] = { 
           purchased: false,
           unlocked: true
         };
+
         notificationManager.addUpgrade();
+        unlockedSomething = true;
       }
+    }
+    
+    if (unlockedSomething) {
+      audioManager.play('unlock', .4);
     }
   }
 
@@ -119,8 +134,9 @@ class GameEngine{
       return;
 
     this.coffeeSystem.tick(delta);
-    boostSystem.update(delta);
+    boostManager.update(delta);
     matrixManager.update(delta);
+    audioManager.update(delta);
 
     const totalGerado = this.productionSystem.calculateTickLps(delta);
     this.addPontos(totalGerado);
@@ -183,7 +199,7 @@ class GameEngine{
             break;
         }
 
-        boostSystem.add(chosenCoffee, message);
+        boostManager.add(chosenCoffee, message);
         matrixManager.start(chosenCoffee.type);
         break;
 
@@ -194,6 +210,7 @@ class GameEngine{
 
     this.state.stats.totalCoffees.value++;
     bonusAlertManager.spawn(chosenCoffee, { x: coffee.x, y: coffee.y }, message);
+    audioManager.play('coffee', .5);
   }
 
   setNickname(nickname) {

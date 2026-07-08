@@ -1,12 +1,12 @@
 <script>
-  import { boostSystem } from "$lib/stores/boostSystem.svelte";
-  boostSystem
+  import { boostManager } from "$lib/stores/boostManager.svelte";
+  boostManager
   import Boost from "./Boost.svelte";
 
 </script>
 
 <div class="container-boosts">
-  {#each boostSystem.active as boost (boost.id)}
+  {#each boostManager.active as boost (boost.id)}
     <Boost {boost} />
   {/each}
 </div>

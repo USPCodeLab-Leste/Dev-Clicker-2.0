@@ -11,11 +11,17 @@
   import ContainerRight from '$lib/components/right/ContainerRight.svelte';
   import SideBttns from '$lib/components/SideBttns.svelte';
   import Tooltip from '$lib/components/tooltip/Tooltip.svelte';
+  import { audios } from '$lib/data/audios';
 
   import { gameEngine } from '$lib/game/engine/GameEngine.js';
+  import { gameState } from '$lib/game/state/gameState.svelte';
+  import { audioManager } from '$lib/stores/audioManager.svelte';
+  import { formatarNumero } from '$lib/utils/numbers';
   import { onMount } from 'svelte';
 
   onMount(() => {
+    audioManager.registerMany(audios);
+
     let lastTime = performance.now();
     let animationId;
 
@@ -33,6 +39,10 @@
     return () => cancelAnimationFrame(animationId);
   })
 </script>
+
+<svelte:head>
+	<title>{gameState.stats.totalClicks.value > 0 ? `${formatarNumero(gameState.pontos, true)} linhas de código - DevClicker` : 'DevClicker'}</title>
+</svelte:head>
 
 <main>
   <CompanyModal />

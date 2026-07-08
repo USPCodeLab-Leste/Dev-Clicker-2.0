@@ -1,7 +1,8 @@
 import { gameState } from "$lib/game/state/gameState.svelte";
+import { audioManager } from "./audioManager.svelte";
 import { matrixManager } from "./matrixManager.svelte";
 
-export class BoostSystem {
+export class BoostManager {
   active = $state([]);
   now = $state(Date.now());
 
@@ -21,6 +22,7 @@ export class BoostSystem {
       startedAt: Date.now()
     })
 
+    audioManager.playMusic('matrix', { volume: .2, loop: true });
     this.applyEffect(boost);
   }
 
@@ -68,4 +70,4 @@ export class BoostSystem {
   }
 }
 
-export const boostSystem = new BoostSystem();
+export const boostManager = new BoostManager();

@@ -2,6 +2,7 @@
   import { scrollShadow } from '$lib/actions/scrollShadow';
   import { gameEngine } from '$lib/game/engine/GameEngine';
   import { gameState } from '$lib/game/state/gameState.svelte';
+  import { audioManager } from '$lib/stores/audioManager.svelte';
   import { notificationManager } from '$lib/stores/notificationManager.svelte';
 
   import StructuresList from './structures/StructuresList.svelte';
@@ -13,7 +14,13 @@
     if (activeTab === tab) return;
     
     notificationManager.clear();
+    audioManager.play('tab', .5)
     activeTab = tab;
+  }
+
+  function changeBulkMultiplier(multiplier) {
+    gameEngine.changeBulkMultiplier(multiplier);
+    audioManager.play('tab', .5);
   }
 </script>
 
@@ -52,19 +59,19 @@
         data-bulk="1" 
         class="bulk bulk1"
         class:active={gameState.bulkMultiplier === 1}
-        onclick={() => gameEngine.changeBulkMultiplier(1)}
+        onclick={() => changeBulkMultiplier(1)}
       >x1</button>
       <button 
         data-bulk="10" 
         class="bulk bulk10" 
         class:active={gameState.bulkMultiplier === 10}
-        onclick={() => gameEngine.changeBulkMultiplier(10)}
+        onclick={() => changeBulkMultiplier(10)}
       >x10</button>
       <button 
         data-bulk="100" 
         class="bulk bulk100" 
         class:active={gameState.bulkMultiplier === 100}
-        onclick={() => gameEngine.changeBulkMultiplier(100)}
+        onclick={() => changeBulkMultiplier(100)}
       >x100</button>
     </div>
   </div>

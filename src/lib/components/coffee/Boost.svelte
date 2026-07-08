@@ -1,5 +1,5 @@
 <script>
-  import { boostSystem } from "$lib/stores/boostSystem.svelte";
+  import { boostManager } from "$lib/stores/boostManager.svelte";
   import { showInfoModal } from "$lib/stores/infoModal.svelte";
   import { showTooltip, hideTooltip } from "$lib/stores/tooltip.svelte";
 
@@ -18,7 +18,7 @@
 <div
   class="boost cooldown"
   data-tooltipId={boost.id}
-  style={`--progress: ${boostSystem.getProgress(boost) * 360}deg;`}
+  style={`--progress: ${boostManager.getProgress(boost) * 360}deg;`}
   onmousemove={mouseEnter}
   onmouseleave={mouseLeave}
   ontouchstart={() => showInfoModal({...boost.boost, funcao: boost.message})}
