@@ -115,6 +115,9 @@ class GameEngine{
   }
 
   tick(delta) {
+    if (!this.state.company)
+      return;
+
     this.coffeeSystem.tick(delta);
     boostSystem.update(delta);
     matrixManager.update(delta);
@@ -191,6 +194,10 @@ class GameEngine{
 
     this.state.stats.totalCoffees.value++;
     bonusAlertManager.spawn(chosenCoffee, { x: coffee.x, y: coffee.y }, message);
+  }
+
+  setNickname(nickname) {
+    this.state.company = nickname;
   }
 
 }

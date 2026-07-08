@@ -108,7 +108,16 @@ body.matrix .content-item, body.evil .content-item {
 
 /* Textos para a estrutura */
 .mobile-purchased { color: white; font-weight: normal; }
-.item-purchased { font-size: 1.8em; color: var(--c2); font-weight: normal; }
+.item-purchased { 
+  font-size: 1.8em; 
+  color: var(--c2); 
+  font-weight: normal; 
+
+  @media (max-width: 800px) {
+    display: none;
+    visibility: hidden;
+  }
+}
 .item-name, .mobile-name { 
   font-size: 1.2em; 
   text-align: left; 

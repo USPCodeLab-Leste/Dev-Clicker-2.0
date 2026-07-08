@@ -8,6 +8,9 @@
   let keyboardHitboxElement;
   
   function onKeyUp(event) {
+    if (!gameState.company)
+      return;
+
     const padding = 10
     const rect = keyboardHitboxElement.getBoundingClientRect()
     const coords = {

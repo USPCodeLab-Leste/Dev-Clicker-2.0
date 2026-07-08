@@ -5,7 +5,7 @@
 </script>
 
 <div class="container-left--header">
-  <span class="company-text">{gameState.company}</span>
+  <span class="company-text">{gameState.company || 'Loading...'}</span>
   <span class="ls-text" id="pontos">{formatarNumero((gameState.pontos).toFixed(0), true)} linhas de código</span>
   <span class="lps-persecond">linhas p/ segundo: {formatarNumero(gameEngine.calcLpsTotal())}</span>
 </div>
